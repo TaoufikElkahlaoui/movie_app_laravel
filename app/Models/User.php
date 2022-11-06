@@ -13,7 +13,17 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Notifiable, LaratrustUserTrait;
 
-    protected $fillable = ['name', 'email', 'password', 'type', 'image', 'verify_code' ,'email_verified_at'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'type',
+        'image',
+        'phone',
+        'address',
+        'verify_code',
+        'email_verified_at'
+    ];
 
     protected $appends = ['image_path'];
 
@@ -27,8 +37,7 @@ class User extends Authenticatable
     public function getNameAttribute($value)
     {
         return ucfirst($value);
-
-    }// end of getNameAttribute
+    } // end of getNameAttribute
 
     public function getImagePathAttribute()
     {
@@ -37,8 +46,7 @@ class User extends Authenticatable
         }
 
         return asset('admin_assets/images/default.png');
-
-    }// end of getImagePathAttribute
+    } // end of getImagePathAttribute
 
     //scope
     public function scopeWhenRoleId($query, $roleId)
@@ -48,26 +56,21 @@ class User extends Authenticatable
             return $q->whereHas('roles', function ($qu) use ($roleId) {
 
                 return $qu->where('id', $roleId);
-
             });
-
         });
-
-    }// end of scopeWhenRoleId
+    } // end of scopeWhenRoleId
 
     //rel
     public function favoriteMovies()
     {
         return $this->belongsToMany(Movie::class, 'user_favorite_movie', 'user_id', 'movie_id');
-
-    }// end of favoriteMovies
+    } // end of favoriteMovies
 
     //fun
     public function hasImage()
     {
         return $this->image != null;
-
-    }// end of hasImage
+    } // end of hasImage
 
     protected static function booted()
     {
@@ -76,6 +79,6 @@ class User extends Authenticatable
         //     $user->save();
         // });
 
-    }//end of booted
+    } //end of booted
 
 }//end of model

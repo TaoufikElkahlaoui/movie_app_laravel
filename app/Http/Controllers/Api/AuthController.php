@@ -108,7 +108,7 @@ class AuthController extends Controller
         if ($user) {
             $user->email_verified_at = Carbon::now()->timestamp;
             $user->update();
-            return Response()->api([], 0, "Email verified");
+            return Response()->api([]);
         } else
             return response()->api([], 1, "Verification Code is not correct");
     }
