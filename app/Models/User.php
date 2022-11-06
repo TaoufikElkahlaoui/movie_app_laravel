@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Notifiable, LaratrustUserTrait;
 
-    protected $fillable = ['name', 'email', 'password', 'type', 'image',];
+    protected $fillable = ['name', 'email', 'password', 'type', 'image', 'verify_code'];
 
     protected $appends = ['image_path'];
 

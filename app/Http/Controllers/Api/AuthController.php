@@ -60,18 +60,20 @@ class AuthController extends Controller
             'verify_code' => $verifyCode,
         ]);
         
+
+        
+        $user = User::create($request->all());
+        
+        $data['user'] = new UserResource($user);
+        $data['token'] = $user->createToken('my-app-token')->plainTextToken;
+
         $inputs =  [
             'title' => 'Verify Email',
             'body' => $verifyCode
         ];
-        Mail::to('tawfikk41@gmail.com')->send(new VerifyCodeMail($inputs));
+
+        Mail::to($user->email)->send(new VerifyCodeMail($inputs));
         
-        $user = User::create($request->all());
-        dd($user);
-
-        $data['user'] = new UserResource($user);
-        $data['token'] = $user->createToken('my-app-token')->plainTextToken;
-
         return response()->api($data);
     } //end of register
 
