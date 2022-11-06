@@ -93,18 +93,22 @@ class AuthController extends Controller
             'email' => 'required',
             'verifyCode' => 'required',
         ]);
-        // $email = $request->email;
-        // $verifyCode = $request->verifyCode;
+        if ($validator->fails()) {
+            return response()->api([], 1, $validator->errors()->first());
+        }
 
-        // $user = User::where([
-        //     'email' => $email,
-        //     'verify_code' => $verifyCode,
-        // ])->first();
+        $email = $request->email;
+        $verifyCode = $request->verifyCode;
 
-        // if ($user) {
-        //     $user->email_verified_at = Carbon::now()->timestamp;
-        //     return Response()->api([], 0, "Email verified");
-        // } else
-        //     return response()->api([], 1, "Verification Code is not correct");
+        $user = User::where([
+            'email' => $email,
+            'verify_code' => $verifyCode,
+        ])->first();
+
+        if ($user) {
+            $user->email_verified_at = Carbon::now()->timestamp;
+            return Response()->api([], 0, "Email verified");
+        } else
+            return response()->api([], 1, "Verification Code is not correct");
     }
 }//end of controller
