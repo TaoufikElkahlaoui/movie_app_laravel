@@ -90,8 +90,8 @@ class AuthController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
             'email' => 'required',
+            'verifyCode' => 'required',
         ]);
         $email = $request->email;
         $verifyCode = $request->verifyCode;
