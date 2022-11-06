@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Mail\VerifyCodeMail;
 use App\Models\User;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -59,11 +61,11 @@ class AuthController extends Controller
             'type' => 'user',
             'verify_code' => $verifyCode,
         ]);
-        
 
-        
+
+
         $user = User::create($request->all());
-        
+
         $data['user'] = new UserResource($user);
         $data['token'] = $user->createToken('my-app-token')->plainTextToken;
 
@@ -73,7 +75,7 @@ class AuthController extends Controller
         ];
 
         Mail::to($user->email)->send(new VerifyCodeMail($inputs));
-        
+
         return response()->api($data);
     } //end of register
 
@@ -84,4 +86,21 @@ class AuthController extends Controller
         return response()->api($data);
     } // end of user
 
+    public function verifyCode(Request $request)
+    {
+        $email = $request->email;
+        $verifyCode = $request->verifyCode;
+
+        $user = User::where([
+            'email' => $email,
+            'verify_code' => $verifyCode,
+        ])->first();
+
+        if ($user){
+            $user->email_verified_at = Carbon::now()->timestamp;
+            return Response()->api([],0,"Email verified");
+        }
+        else
+            return response()->api([], 1, "Verification Code is not correct");
+    }
 }//end of controller

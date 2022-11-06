@@ -2,6 +2,7 @@
 
 Route::post('/login', 'AuthController@login');
 Route::post('/register', 'AuthController@register');
+Route::post('/verify_code', 'AuthController@verifyCode');
 
 //genre routes
 Route::get('/genres', 'GenreController@index');
