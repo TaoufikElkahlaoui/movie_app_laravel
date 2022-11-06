@@ -54,14 +54,13 @@ class AuthController extends Controller
 
         $verifyCode =  rand(10000, 99999);
 
-        dd($verifyCode);
         $request->merge([
             'password' => bcrypt($request->password),
             'type' => 'user',
             'verify_code' => $verifyCode,
-
         ]);
-
+        
+        dd($request->all());
         $inputs =  [
             'title' => 'Verify Email',
             'body' => $verifyCode
