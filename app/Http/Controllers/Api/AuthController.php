@@ -88,6 +88,11 @@ class AuthController extends Controller
 
     public function verifyCode(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required',
+        ]);
         $email = $request->email;
         $verifyCode = $request->verifyCode;
 
@@ -96,11 +101,10 @@ class AuthController extends Controller
             'verify_code' => $verifyCode,
         ])->first();
 
-        if ($user){
+        if ($user) {
             $user->email_verified_at = Carbon::now()->timestamp;
-            return Response()->api([],0,"Email verified");
-        }
-        else
+            return Response()->api([], 0, "Email verified");
+        } else
             return response()->api([], 1, "Verification Code is not correct");
     }
 }//end of controller
