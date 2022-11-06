@@ -5,13 +5,13 @@ Route::post('/register', 'AuthController@register');
 Route::post('/verify_code', 'AuthController@verifyCode');
 
 //genre routes
-Route::get('/genres', 'GenreController@index');
+Route::any('/genres', 'GenreController@index');
 
 //movie routes
-Route::get('/movies/{movie}/images', 'MovieController@images');
-Route::get('/movies/{movie}/actors', 'MovieController@actors');
-Route::get('/movies/{movie}/related_movies', 'MovieController@relatedMovies');
-Route::get('/movies', 'MovieController@index');
+Route::any('/movies/{movie}/images', 'MovieController@images');
+Route::any('/movies/{movie}/actors', 'MovieController@actors');
+Route::any('/movies/{movie}/related_movies', 'MovieController@relatedMovies');
+Route::any('/movies', 'MovieController@index');
 
 Route::middleware('auth:sanctum')->group(function () {
 
