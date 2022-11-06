@@ -21,7 +21,7 @@ class MovieController extends Controller
 
         $data['movies'] = MovieResource::collection($movies)->response()->getData(true);
 
-        return response()->ap($data);
+        return response()->api($data);
 
     }// end of index
 
