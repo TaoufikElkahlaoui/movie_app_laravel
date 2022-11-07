@@ -17,7 +17,7 @@ class MovieController extends Controller
             ->whenGenreId(request()->genre_id)
             ->whenActorId(request()->actor_id)
             ->with('genres')
-            ->paginate(10);
+            ->paginat(10);
 
         $data['movies'] = MovieResource::collection($movies)->response()->getData(true);
 
