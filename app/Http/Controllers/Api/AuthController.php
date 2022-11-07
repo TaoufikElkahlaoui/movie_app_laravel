@@ -98,7 +98,7 @@ class AuthController extends Controller
         }
 
         $email = $request->email;
-        $verifyCode = $request->verifyCode;
+        $verifyCode = $request->verify_code;
 
         $user = User::where([
             'email' => $email,
@@ -107,8 +107,8 @@ class AuthController extends Controller
 
         dd($user);
         if ($user) {
-            $user->email_verified_at = Carbon::now()->timestamp;
-            $user->update();
+            // $user->email_verified_at = Carbon::now()->timestamp;
+            // $user->update();
             return Response()->api([]);
         } else
             return response()->api([], 1, "Verification Code is not correct");
