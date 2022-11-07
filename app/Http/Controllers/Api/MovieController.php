@@ -12,13 +12,12 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $movies = [];
-        //  Movie::whenType(request()->type)
-        //     ->whenSearch(request()->search)
-        //     ->whenGenreId(request()->genre_id)
-        //     ->whenActorId(request()->actor_id)
-        //     ->with('genres')
-        //     ->paginate(10);
+        $movies = Movie::whenType(request()->type)
+            ->whenSearch(request()->search)
+            ->whenGenreId(request()->genre_id)
+            ->whenActorId(request()->actor_id)
+            ->with('genres')
+            ->paginate(10);
 
         $data['movies'] = MovieResource::collection($movies)->response()->getData(true);
 
