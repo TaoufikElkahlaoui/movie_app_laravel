@@ -91,7 +91,7 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'email' => 'required',
-            'verifyCode' => 'required',
+            'verify_code' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->api([], 1, $validator->errors()->first());
