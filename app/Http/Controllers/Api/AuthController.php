@@ -105,8 +105,8 @@ class AuthController extends Controller
             'verify_code' => $verifyCode,
         ])->first();
 
-        dd($user);
         if ($user) {
+            dd($user);
             // $user->email_verified_at = Carbon::now()->timestamp;
             // $user->update();
             return Response()->api([]);
